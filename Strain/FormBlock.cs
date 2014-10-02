@@ -48,8 +48,10 @@ namespace Strain
         }
         else
         {
+          label2.Visible = false;
           label2.Text = "You can now close this dialog.";
           label2.Left = (Width / 2) - (label2.Width / 2);
+          label2.Visible = true;
         }
 
         //label3.Text = ". ".Repeat(diff);
@@ -68,6 +70,7 @@ namespace Strain
 
     private void FormBlock_Shown(object sender, EventArgs e)
     {
+      //timerClose.Interval = 1;
       //timerClose.Enabled = true;
       buttonClose.Enabled = false;
       cbSkip.Checked = false;
@@ -85,16 +88,22 @@ namespace Strain
       label3.Text = ". . . . . . . . . . . . . . . . . . . ."; // Progress meter was creaping to the left since the text was ""
       label3.Top = label2.Top + label2.Height + 20;
       label3.Left = (Width / 2) - (label3.Width / 2);
+
+      label1.Visible = true;
+      label2.Visible = true;
+      label3.Visible = true;
     }
 
     private void FormBlock_FormClosing(object sender, FormClosingEventArgs e)
     {
       timerClose.Enabled = false;
       Skip = cbSkip.Checked;
+      e.Cancel = Ticks <= (MaxTicks-1);
     }
 
     private void timerDraw_Tick(object sender, EventArgs e)
     {
+      //*
       float delta = 0.05f;
       this.Opacity += delta;
       //label1.Text = this.Opacity.ToString();
@@ -104,6 +113,8 @@ namespace Strain
         timerDraw.Enabled = false;
         timerClose.Enabled = true;
       }
+      //*/
+      timerClose.Enabled = true;
     }
 
     private void cbSkip_CheckedChanged(object sender, EventArgs e)
@@ -112,6 +123,11 @@ namespace Strain
     }
 
     private void buttonClose_Click(object sender, EventArgs e)
+    {
+      Close();
+    }
+
+    private void FormBlock_MouseClick(object sender, MouseEventArgs e)
     {
       Close();
     }

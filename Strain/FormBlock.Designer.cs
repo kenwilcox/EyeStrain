@@ -80,6 +80,7 @@
       this.label1.Size = new System.Drawing.Size(794, 25);
       this.label1.TabIndex = 2;
       this.label1.Text = "Look away from the computer - preferably something that\'s 20 feet away.";
+      this.label1.Visible = false;
       // 
       // label2
       // 
@@ -95,6 +96,7 @@
       this.label2.Size = new System.Drawing.Size(471, 25);
       this.label2.TabIndex = 3;
       this.label2.Text = "You will be able to close this in 20 seconds.";
+      this.label2.Visible = false;
       // 
       // timerClose
       // 
@@ -120,6 +122,7 @@
       this.label3.Size = new System.Drawing.Size(305, 25);
       this.label3.TabIndex = 4;
       this.label3.Text = ". . . . . . . . . . . . . . . . . . . .";
+      this.label3.Visible = false;
       // 
       // FormBlock
       // 
@@ -134,13 +137,16 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.cbSkip);
       this.Controls.Add(this.buttonClose);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "FormBlock";
       this.Opacity = 0.9;
       this.ShowInTaskbar = false;
       this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+      this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.TopMost = true;
+      this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FormBlock_MouseClick);
       this.Shown += new System.EventHandler(this.FormBlock_Shown);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormBlock_FormClosing);
       this.ResumeLayout(false);

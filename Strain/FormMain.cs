@@ -51,18 +51,21 @@ A 'snooze' feature will allow you to delay it for 40 minutes.
       timerTime.Enabled = false;
       
       Rectangle rect;
-      rect = Screen.GetBounds(this);
-
-      fb.Top = 0;
-      fb.Left = 0;
+      //rect = Screen.GetBounds(this);
+      rect = SystemInformation.VirtualScreen;
+      //Point p = new Point(-1920, 0);
+      fb.Location = rect.Location;
+      fb.Size = rect.Size;
+      //fb.Top = rect.Y;// 0; 
+      //fb.Left = rect.X;// 0;
 
       fb.Width = rect.Width;
       fb.Height = rect.Height;
-      fb.Opacity = 0.60;
+      //fb.Opacity = 0.60;
       //SystemSounds.Beep.Play(); -- Ding
       //SystemSounds.Asterisk.Play(); // bing-do
       SystemSounds.Exclamation.Play(); // wo-do
-      fb.ShowDialog();
+      fb.ShowDialog(this);
       if (fb.Skip == true)
       {
         label1.Text = "Skip: True";
@@ -83,6 +86,8 @@ A 'snooze' feature will allow you to delay it for 40 minutes.
 #endif
       timerBlock.Enabled = true;
       timerTime.Enabled = true;
+      
+      //fb.Dispose();  // NEVER do this - I only create it once
     }
 
 
@@ -115,7 +120,16 @@ A 'snooze' feature will allow you to delay it for 40 minutes.
 
     private void SubtractTime(Milliseconds Seconds)
     {
+      timerBlock.Enabled = false;
+      timerTime.Enabled = false;
 
+      beep = beep.AddMilliseconds(-(int)Seconds);
+      //duration = beep - DateTime.Now;
+      timerBlock.Interval -= (int)Seconds;
+      progress.Maximum -= (int)Seconds;
+
+      timerBlock.Enabled = true;
+      timerTime.Enabled = true;
     }
 
     private void FormMain_Shown(object sender, EventArgs e)
@@ -160,19 +174,18 @@ Are you sure you want to quit?";
 
     private void labelTime_MouseUp(object sender, MouseEventArgs e)
     {
-#if DEBUG
       // TODO - Add time on a left mouse
       // TODO - Subtract time on a right mouse
       if (e.Button == MouseButtons.Left)
       {
-        this.Text = "Left";
+        //this.Text = "Left";
         AddTime(Milliseconds.OneMinute);
       }
       else if (e.Button == MouseButtons.Right)
       {
-        this.Text = "Right";
+        //this.Text = "Right";
+        SubtractTime(Milliseconds.OneMinute);
       }
-#endif
     }
   }
 }
